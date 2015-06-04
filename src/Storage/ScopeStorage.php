@@ -1,6 +1,6 @@
-<?php namespace AmaroRafael\OAuth2Server\Storage;
+<?php namespace Rapiro\OAuth2Server\Storage;
 
-use AmaroRafael\Models\Oauth_scope;
+use Rapiro\Models\Oauth_scope;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\ScopeEntity;
 use League\OAuth2\Server\Storage\AbstractStorage;

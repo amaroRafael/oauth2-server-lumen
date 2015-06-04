@@ -1,4 +1,4 @@
-<?php namespace AmaroRafael\Models;
+<?php namespace Rapiro\Models;
 /**
  * Created by PhpStorm.
  * User: ramaro

@@ -1,6 +1,6 @@
-<?php namespace AmaroRafael\OAuth2Server\Storage;
+<?php namespace Rapiro\OAuth2Server\Storage;
 
-use AmaroRafael\Models\Oauth_refresh_token;
+use Rapiro\Models\Oauth_refresh_token;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\RefreshTokenEntity;
 use League\OAuth2\Server\Storage\AbstractStorage;

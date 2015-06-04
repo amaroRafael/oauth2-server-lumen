@@ -7,7 +7,7 @@
  */
 
 use Illuminate\Database\Seeder;
-use AmaroRafael\Models\User;
+use Rapiro\Models\User;
 
 class UserTableSeeder extends Seeder {
 

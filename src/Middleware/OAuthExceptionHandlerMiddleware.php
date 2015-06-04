@@ -1,4 +1,4 @@
-<?php namespace AmaroRafael\OAuth2Server\Middleware;
+<?php namespace Rapiro\OAuth2Server\Middleware;
 
 use Closure;
 use Illuminate\Http\JsonResponse;

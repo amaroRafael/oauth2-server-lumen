@@ -1,5 +1,5 @@
 {
-  "name": "amarorafael/oauth2-server-lumen",
+  "name": "rapiro/oauth2server-lumen",
   "description": "PHP OAuth 2.0 Server for Lumen",
   "keywords": [ "laravel", "lumen", "oauth2", "oauth", "server", "api" ],
   "license": "MIT",
@@ -17,7 +17,7 @@
   },
   "autoload": {
       "psr-4": {
-        "AmaroRafael\\OAuth2Server\\": "src"
+        "Rapiro\\OAuth2Server\\": "src"
       },
       "classmap": [
         "database/"

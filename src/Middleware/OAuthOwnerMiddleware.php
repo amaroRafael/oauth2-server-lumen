@@ -1,7 +1,7 @@
-<?php namespace AmaroRafael\OAuth2Server\Middleware;
+<?php namespace Rapiro\OAuth2Server\Middleware;
 
 use Closure;
-use AmaroRafael\OAuth2Server\Filters\OAuthOwnerFilter;
+use Rapiro\OAuth2Server\Filters\OAuthOwnerFilter;
 
 class OAuthOwnerMiddleware extends OAuthOwnerFilter {
 

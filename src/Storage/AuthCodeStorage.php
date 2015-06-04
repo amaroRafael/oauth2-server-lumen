@@ -1,7 +1,7 @@
-<?php namespace AmaroRafael\OAuth2Server\Storage;
+<?php namespace Rapiro\OAuth2Server\Storage;
 
-use AmaroRafael\Models\Oauth_auth_code;
-use AmaroRafael\Models\Oauth_auth_code_scope;
+use Rapiro\Models\Oauth_auth_code;
+use Rapiro\Models\Oauth_auth_code_scope;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\AuthCodeEntity;
 use League\OAuth2\Server\Entity\ScopeEntity;

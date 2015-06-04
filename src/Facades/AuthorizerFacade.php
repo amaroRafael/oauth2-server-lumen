@@ -1,4 +1,4 @@
-<?php namespace AmaroRafael\OAuth2Server\Facades;
+<?php namespace Rapiro\OAuth2Server\Facades;
 /**
  * Authorizer Facade
  *

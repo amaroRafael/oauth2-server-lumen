@@ -1,4 +1,4 @@
-<?php namespace AmaroRafael\OAuth2Server;
+<?php namespace Rapiro\OAuth2Server;
 /**
  * Laravel Service Provider for the OAuth 2.0 Server
  *

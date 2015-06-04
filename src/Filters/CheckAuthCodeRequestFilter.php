@@ -1,10 +1,10 @@
-<?php namespace AmaroRafael\OAuth2Server\Filters;
+<?php namespace Rapiro\OAuth2Server\Filters;
 /**
  * OAuth parameters check route middleware
  *
  */
 
-use AmaroRafael\OAuth2Server\Authorizer;
+use Rapiro\OAuth2Server\Authorizer;
 
 class CheckAuthCodeRequestFilter
 {

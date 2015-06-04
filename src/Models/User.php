@@ -1,4 +1,4 @@
-<?php namespace AmaroRafael\Models;
+<?php namespace Rapiro\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;

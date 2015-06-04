@@ -1,11 +1,11 @@
-<?php namespace AmaroRafael\OAuth2Server\Filters;
+<?php namespace Rapiro\OAuth2Server\Filters;
 /**
  * OAuth owner route filter
  *
  */
 
 use League\OAuth2\Server\Exception\AccessDeniedException;
-use AmaroRafael\OAuth2Server\Authorizer;
+use Rapiro\OAuth2Server\Authorizer;
 
 class OAuthOwnerFilter
 {

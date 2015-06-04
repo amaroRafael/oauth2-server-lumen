@@ -1,4 +1,4 @@
-<?php  namespace AmaroRafael\OAuth2Server\Providers;
+<?php  namespace Rapiro\OAuth2Server\Providers;
 /**
  * Created by PhpStorm.
  * User: ramaro
@@ -6,13 +6,13 @@
  * Time: 10:44 PM
  */
 
-use AmaroRafael\OAuth2Server\Authorizer;
-use AmaroRafael\OAuth2Server\Storage\AccessTokenStorage;
-use AmaroRafael\OAuth2Server\Storage\AuthCodeStorage;
-use AmaroRafael\OAuth2Server\Storage\ClientStorage;
-use AmaroRafael\OAuth2Server\Storage\RefreshTokenStorage;
-use AmaroRafael\OAuth2Server\Storage\ScopeStorage;
-use AmaroRafael\OAuth2Server\Storage\SessionStorage;
+use Rapiro\OAuth2Server\Authorizer;
+use Rapiro\OAuth2Server\Storage\AccessTokenStorage;
+use Rapiro\OAuth2Server\Storage\AuthCodeStorage;
+use Rapiro\OAuth2Server\Storage\ClientStorage;
+use Rapiro\OAuth2Server\Storage\RefreshTokenStorage;
+use Rapiro\OAuth2Server\Storage\ScopeStorage;
+use Rapiro\OAuth2Server\Storage\SessionStorage;
 use Illuminate\Support\ServiceProvider;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
@@ -106,7 +106,7 @@ class Oauth2ServerServiceProvider extends ServiceProvider {
             return $authorizer;
         });
 
-        $this->app->bind('AmaroRafael\OAuth2Server\Authorizer', function($app)
+        $this->app->bind('Rapiro\OAuth2Server\Authorizer', function($app)
         {
             return $app['oauth2-server.authorizer'];
         });
@@ -118,16 +118,16 @@ class Oauth2ServerServiceProvider extends ServiceProvider {
      */
     public function registerFilterBindings()
     {
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Filters\CheckAuthCodeRequestFilter', function ($app) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Filters\CheckAuthCodeRequestFilter', function ($app) {
             return new CheckAuthCodeRequestFilter($app['oauth2-server.authorizer']);
         });
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Filters\OAuthFilter', function ($app) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Filters\OAuthFilter', function ($app) {
             $httpHeadersOnly = $app['config']->get('oauth2.http_headers_only');
             return new OAuthFilter($app['oauth2-server.authorizer'], $httpHeadersOnly);
         });
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Filters\OAuthOwnerFilter', function ($app) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Filters\OAuthOwnerFilter', function ($app) {
             return new OAuthOwnerFilter($app['oauth2-server.authorizer']);
         });
     }

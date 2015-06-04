@@ -1,15 +1,15 @@
-<?php namespace AmaroRafael\OAuth2Server\Providers;
+<?php namespace Rapiro\OAuth2Server\Providers;
 /**
  * Fluent Storage Service Provider for the OAuth 2.0 Server
  *
  */
 
-use AmaroRafael\OAuth2Server\Storage\AccessTokenStorage;
-use AmaroRafael\OAuth2Server\Storage\AuthCodeStorage;
-use AmaroRafael\OAuth2Server\Storage\ClientStorage;
-use AmaroRafael\OAuth2Server\Storage\RefreshTokenStorage;
-use AmaroRafael\OAuth2Server\Storage\ScopeStorage;
-use AmaroRafael\OAuth2Server\Storage\SessionStorage;
+use Rapiro\OAuth2Server\Storage\AccessTokenStorage;
+use Rapiro\OAuth2Server\Storage\AuthCodeStorage;
+use Rapiro\OAuth2Server\Storage\ClientStorage;
+use Rapiro\OAuth2Server\Storage\RefreshTokenStorage;
+use Rapiro\OAuth2Server\Storage\ScopeStorage;
+use Rapiro\OAuth2Server\Storage\SessionStorage;
 use Illuminate\Support\ServiceProvider;
 
 class StorageServiceProvider extends ServiceProvider
@@ -50,35 +50,35 @@ class StorageServiceProvider extends ServiceProvider
     {
         $provider = $this;
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Storage\AccessTokenStorage', function () use ($provider) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Storage\AccessTokenStorage', function () use ($provider) {
             $storage = new AccessTokenStorage();
             return $storage;
         });
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Storage\AuthCodeStorage', function () use ($provider) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Storage\AuthCodeStorage', function () use ($provider) {
             $storage = new AuthCodeStorage();
             return $storage;
         });
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Storage\ClientStorage', function ($app) use ($provider) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Storage\ClientStorage', function ($app) use ($provider) {
             $limitClientsToGrants = $app['config']->get('oauth2.limit_clients_to_grants');
             $storage = new ClientStorage($limitClientsToGrants);
             return $storage;
         });
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Storage\RefreshTokenStorage', function () use ($provider) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Storage\RefreshTokenStorage', function () use ($provider) {
             $storage = new RefreshTokenStorage();
             return $storage;
         });
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Storage\ScopeStorage', function ($app) use ($provider) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Storage\ScopeStorage', function ($app) use ($provider) {
             $limitClientsToScopes = $app['config']->get('oauth2.limit_clients_to_scopes');
             $limitScopesToGrants = $app['config']->get('oauth2.limit_scopes_to_grants');
             $storage = new ScopeStorage($limitClientsToScopes, $limitScopesToGrants);
             return $storage;
         });
 
-        $this->app->bindShared('AmaroRafael\OAuth2Server\Storage\SessionStorage', function () use ($provider) {
+        $this->app->bindShared('Rapiro\OAuth2Server\Storage\SessionStorage', function () use ($provider) {
             $storage = new SessionStorage();
             return $storage;
         });
@@ -90,12 +90,12 @@ class StorageServiceProvider extends ServiceProvider
      */
     public function registerInterfaceBindings()
     {
-        $this->app->bind('League\OAuth2\Server\Storage\ClientInterface',       'AmaroRafael\OAuth2Server\Storage\ClientStorage');
-        $this->app->bind('League\OAuth2\Server\Storage\ScopeInterface',        'AmaroRafael\OAuth2Server\Storage\ScopeStorage');
-        $this->app->bind('League\OAuth2\Server\Storage\SessionInterface',      'AmaroRafael\OAuth2Server\Storage\SessionStorage');
-        $this->app->bind('League\OAuth2\Server\Storage\AuthCodeInterface',     'AmaroRafael\OAuth2Server\Storage\AuthCodeStorage');
-        $this->app->bind('League\OAuth2\Server\Storage\AccessTokenInterface',  'AmaroRafael\OAuth2Server\Storage\AccessTokenStorage');
-        $this->app->bind('League\OAuth2\Server\Storage\RefreshTokenInterface', 'AmaroRafael\OAuth2Server\Storage\RefreshTokenStorage');
+        $this->app->bind('League\OAuth2\Server\Storage\ClientInterface',       'Rapiro\OAuth2Server\Storage\ClientStorage');
+        $this->app->bind('League\OAuth2\Server\Storage\ScopeInterface',        'Rapiro\OAuth2Server\Storage\ScopeStorage');
+        $this->app->bind('League\OAuth2\Server\Storage\SessionInterface',      'Rapiro\OAuth2Server\Storage\SessionStorage');
+        $this->app->bind('League\OAuth2\Server\Storage\AuthCodeInterface',     'Rapiro\OAuth2Server\Storage\AuthCodeStorage');
+        $this->app->bind('League\OAuth2\Server\Storage\AccessTokenInterface',  'Rapiro\OAuth2Server\Storage\AccessTokenStorage');
+        $this->app->bind('League\OAuth2\Server\Storage\RefreshTokenInterface', 'Rapiro\OAuth2Server\Storage\RefreshTokenStorage');
     }
 }
  

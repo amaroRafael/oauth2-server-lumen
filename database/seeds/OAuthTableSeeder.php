@@ -1,6 +1,6 @@
 <?php
 
-use AmaroRafael\Models\Oauth_client;
+use Rapiro\Models\Oauth_client;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
