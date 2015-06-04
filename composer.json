@@ -1,5 +1,5 @@
 {
-  "name": "amaroRafael/oauth-server-lumen",
+  "name": "amaroRafael/oauth2-server-lumen",
   "description": "PHP OAuth 2.0 Server for Lumen",
   "keywords": [
     "laravel",
