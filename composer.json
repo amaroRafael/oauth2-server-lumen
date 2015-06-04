@@ -1,22 +1,15 @@
 {
   "name": "amaroRafael/oauth2-server-lumen",
   "description": "PHP OAuth 2.0 Server for Lumen",
-  "keywords": [
-    "laravel",
-    "lumen",
-    "oauth2",
-    "oauth",
-    "server",
-    "api"
-  ],
+  "keywords": [ "laravel", "lumen", "oauth2", "oauth", "server", "api" ],
+  "license": "MIT",
+  "type": "project",
   "authors": [
     {
       "name": "Rafael Luis Neves Amaro",
       "email": "contact@rafaelamaro.com"
     }
   ],
-  "license": "MIT",
-  "type": "project",
   "require": {
     "php": ">=5.5.0",
     "laravel/lumen-framework": "5.0.*",
@@ -34,5 +27,5 @@
       "classmap": [
           "tests/"
       ]
-  },
+  }
 }
