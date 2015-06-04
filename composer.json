@@ -1,5 +1,5 @@
 {
-  "name": "amaroRafael/oauth2-server-lumen",
+  "name": "amarorafael/oauth2-server-lumen",
   "description": "PHP OAuth 2.0 Server for Lumen",
   "keywords": [ "laravel", "lumen", "oauth2", "oauth", "server", "api" ],
   "license": "MIT",
