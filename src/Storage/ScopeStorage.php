@@ -1,6 +1,5 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Rapiro\Models\Oauth_scope;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\ScopeEntity;
 use League\OAuth2\Server\Storage\AbstractStorage;
@@ -43,7 +42,7 @@ class ScopeStorage extends AbstractStorage implements ScopeInterface
      */
     public function get($scope, $grantType = null, $clientId = null)
     {
-        $result = Oauth_scope::query()
+        $result = Capsule::table('oauth_scopes')
                     ->where('id', $scope)
                     ->get();
 

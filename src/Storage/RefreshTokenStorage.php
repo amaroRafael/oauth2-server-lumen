@@ -1,6 +1,5 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Rapiro\Models\Oauth_refresh_token;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\RefreshTokenEntity;
 use League\OAuth2\Server\Storage\AbstractStorage;
@@ -13,7 +12,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function get($token)
     {
-        $result = Oauth_refresh_token::query()
+        $result = Capsule::table('oauth_refresh_tokens')
                     ->where('refresh_token', $token)
                     ->get();
 
@@ -34,7 +33,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function create($token, $expireTime, $accessToken)
     {
-        Oauth_refresh_token::create([
+        Capsule::table('oauth_refresh_tokens')->insert([
             'refresh_token' =>  $token,
             'access_token'  =>  $accessToken,
             'expire_time'   =>  $expireTime,
@@ -46,7 +45,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function delete(RefreshTokenEntity $token)
     {
-        Oauth_refresh_token::query()
+        Capsule::table('oauth_refresh_tokens')
             ->where('refresh_token', $token->getId())
             ->delete();
     }

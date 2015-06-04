@@ -1,7 +1,5 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Rapiro\Models\Oauth_auth_code;
-use Rapiro\Models\Oauth_auth_code_scope;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\AuthCodeEntity;
 use League\OAuth2\Server\Entity\ScopeEntity;
@@ -15,7 +13,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function get($code)
     {
-        $result = Oauth_auth_code::query()
+        $result = Capsule::table('oauth_auth_codes')
                     ->where('auth_code', $code)
                     ->where('expire_time', '>=', time())
                     ->get();
@@ -34,12 +32,12 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
 
     public function create($token, $expireTime, $sessionId, $redirectUri)
     {
-        Oauth_auth_code::create([
-                        'auth_code'            =>  $token,
-                        'client_redirect_uri'  =>  $redirectUri,
-                        'session_id'           =>  $sessionId,
-                        'expire_time'          =>  $expireTime,
-                    ]);
+        Capsule::table('oauth_auth_codes')->insert([
+            'auth_code'            =>  $token,
+            'client_redirect_uri'  =>  $redirectUri,
+            'session_id'           =>  $sessionId,
+            'expire_time'          =>  $expireTime,
+        ]);
     }
 
     /**
@@ -47,7 +45,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function getScopes(AuthCodeEntity $token)
     {
-        $result = Oauth_auth_code_scope::query()
+        $result = Capsule::table('oauth_auth_code_scopes')
                     ->select(['oauth_scopes.id', 'oauth_scopes.description'])
                     ->join('oauth_scopes', 'oauth_auth_code_scopes.scope', '=', 'oauth_scopes.id')
                     ->where('auth_code', $token->getId())
@@ -73,7 +71,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function associateScope(AuthCodeEntity $token, ScopeEntity $scope)
     {
-        Oauth_auth_code_scope::create([
+        Capsule::table('oauth_auth_code_scopes')->insert([
             'auth_code' =>  $token->getId(),
             'scope'     =>  $scope->getId(),
         ]);
@@ -84,7 +82,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function delete(AuthCodeEntity $token)
     {
-        Oauth_auth_code::query()
+        Capsule::table('oauth_auth_codes')
             ->where('auth_code', $token->getId())
             ->delete();
     }

@@ -1,6 +1,5 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Rapiro\Models\Oauth_client;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\ClientEntity;
 use League\OAuth2\Server\Entity\SessionEntity;
@@ -44,7 +43,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      */
     public function get($clientId, $clientSecret = null, $redirectUri = null, $grantType = null)
     {
-        $query = Oauth_client::query()
+        $query = Capsule::table('oauth_clients')
                   ->select('oauth_clients.*')
                   ->where('oauth_clients.id', $clientId);
 
@@ -78,11 +77,11 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      */
     public function getBySession(SessionEntity $session)
     {
-        $result = Oauth_client::query()
-                            ->select(['oauth_clients.id', 'oauth_clients.name'])
-                            ->join('oauth_sessions', 'oauth_clients.id', '=', 'oauth_sessions.client_id')
-                            ->where('oauth_sessions.id', $session->getId())
-                            ->get();
+        $result = Capsule::table('oauth_clients')
+                    ->select(['oauth_clients.id', 'oauth_clients.name'])
+                    ->join('oauth_sessions', 'oauth_clients.id', '=', 'oauth_sessions.client_id')
+                    ->where('oauth_sessions.id', $session->getId())
+                    ->get();
 
         if (count($result) === 1) {
             $client = new ClientEntity($this->server);

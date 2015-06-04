@@ -7,21 +7,26 @@
  */
 
 use Illuminate\Database\Seeder;
-use Rapiro\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class UserTableSeeder extends Seeder {
 
     public function run()
     {
-        User::query()->forceDelete();
+        DB::table('users')->forceDelete();
 
         $hasher = app()->make('hash');
 
-        User::create([
+        $user = app()->make('Rapiro\Models\User');
+
+        $user->fill([
             'name' => 'User',
             'email' => 'user@user.com',
             'password' => $hasher->make('1234')
         ]);
+
+        $user->save();
     }
 
 }

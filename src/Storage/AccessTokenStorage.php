@@ -1,8 +1,5 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Rapiro\Models\Oauth_access_token;
-use Rapiro\Models\Oauth_access_token_scope;
-use Rapiro\Models\Oauth_auth_code;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\AccessTokenEntity;
 use League\OAuth2\Server\Entity\ScopeEntity;
@@ -16,7 +13,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function get($token)
     {
-        $result = Oauth_access_token::query()
+        $result = Capsule::table('oauth_access_tokens')
                     ->where('access_token', $token)
                     ->get();
 
@@ -36,7 +33,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function getScopes(AccessTokenEntity $token)
     {
-        $result = Oauth_access_token_scope::query()
+        $result = Capsule::table('oauth_access_token_scopes')
                     ->select(['oauth_scopes.id', 'oauth_scopes.description'])
                     ->join('oauth_scopes', 'oauth_access_token_scopes.scope', '=', 'oauth_scopes.id')
                     ->where('access_token', $token->getId())
@@ -62,11 +59,11 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function create($token, $expireTime, $sessionId)
     {
-        Oauth_access_token::create([
-                        'access_token'  =>  $token,
-                        'session_id'    =>  $sessionId,
-                        'expire_time'   =>  $expireTime,
-                    ]);
+        Capsule::table('oauth_access_token')->insert([
+            'access_token'  =>  $token,
+            'session_id'    =>  $sessionId,
+            'expire_time'   =>  $expireTime,
+        ]);
     }
 
     /**
@@ -74,7 +71,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function associateScope(AccessTokenEntity $token, ScopeEntity $scope)
     {
-        Oauth_access_token_scope::create([
+        Capsule::table('oauth_access_token_scopes')->insert([
             'access_token'  =>  $token->getId(),
             'scope'         =>  $scope->getId(),
         ]);
@@ -85,7 +82,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function delete(AccessTokenEntity $token)
     {
-        Oauth_access_token::query()
+        Capsule::table('oauth_access_tokens')
             ->where('access_token', $token->getId())
             ->delete();
     }
