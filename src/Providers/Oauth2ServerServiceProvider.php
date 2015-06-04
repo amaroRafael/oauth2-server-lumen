@@ -40,6 +40,7 @@ class Oauth2ServerServiceProvider extends ServiceProvider {
 
     public function registerConfiguration() {
         $this->app->configure("oauth2");
+        $this->app->configure("auth");
     }
 
     /**

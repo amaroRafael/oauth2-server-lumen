@@ -70,7 +70,10 @@ $app->routeMiddleware([
 
 ### Copy config
 
-Copy ```vendor/Rapiro/oauth2server-lumen/config/oauth2.php``` to your own config folder (```config/oauth2.php``` in your project root). It has to be the correct config folder as it is registered using ```$app->configure()```.
+Copy ```vendor/Rapiro/oauth2server-lumen/config/oauth2.php``` to your own config folder (```config/oauth2.php``` in your project root).
+Copy ```vendor/Rapiro/oauth2server-lumen/config/auth.php``` to your own config folder (```config/oauth2.php``` in your project root).
+
+It has to be the correct config folder as it is registered using ```$app->configure()```.
 
 ### Migrate
 
