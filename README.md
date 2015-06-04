@@ -38,7 +38,7 @@ PHP OAuth 2.0 Server for Lumen
 
 ### Via composer
 
-Run ```composer require 'rapiro/oauth2server-lumen:dev-master'```
+Run ```composer require 'rapiro/oauth2server-lumen:0.1.*'```
 
 ### Register package
 
