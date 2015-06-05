@@ -1,26 +1,24 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\RefreshTokenEntity;
-use League\OAuth2\Server\Storage\AbstractStorage;
 use League\OAuth2\Server\Storage\RefreshTokenInterface;
 
-class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterface
+class RefreshTokenStorage extends BaseStorage implements RefreshTokenInterface
 {
     /**
      * {@inheritdoc}
      */
     public function get($token)
     {
-        $result = Capsule::table('oauth_refresh_tokens')
+        $result = $this->getConnection()->table('oauth_refresh_tokens')
                     ->where('refresh_token', $token)
-                    ->get();
+                    ->first();
 
-        if (count($result) === 1) {
+        if (!is_null($result)) {
             $token = (new RefreshTokenEntity($this->server))
-                        ->setId($result[0]['refresh_token'])
-                        ->setExpireTime($result[0]['expire_time'])
-                        ->setAccessTokenId($result[0]['access_token']);
+                        ->setId($result->refresh_token)
+                        ->setExpireTime($result->expire_time)
+                        ->setAccessTokenId($result->access_token);
 
             return $token;
         }
@@ -33,11 +31,12 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function create($token, $expireTime, $accessToken)
     {
-        Capsule::table('oauth_refresh_tokens')->insert([
-            'refresh_token' =>  $token,
-            'access_token'  =>  $accessToken,
-            'expire_time'   =>  $expireTime,
-        ]);
+        $this->getConnection()->table('oauth_refresh_tokens')
+            ->insert([
+                'refresh_token' =>  $token,
+                'access_token'  =>  $accessToken,
+                'expire_time'   =>  $expireTime,
+            ]);
     }
 
     /**
@@ -45,7 +44,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function delete(RefreshTokenEntity $token)
     {
-        Capsule::table('oauth_refresh_tokens')
+        $this->getConnection()->table('oauth_refresh_tokens')
             ->where('refresh_token', $token->getId())
             ->delete();
     }

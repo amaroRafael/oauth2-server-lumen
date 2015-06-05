@@ -75,6 +75,10 @@ Copy ```vendor/Rapiro/oauth2server-lumen/config/auth.php``` to your own config f
 
 It has to be the correct config folder as it is registered using ```$app->configure()```.
 
+### Copy models
+
+Copy ```vendor/Rapiro/oauth2server-lumen/Models/``` folder to your own app folder (```app/``` in your project root).
+
 ### Migrate
 
 In ```bootstrap/app.php``` file and uncomment ```$app->withFacades();``` and ```$app->withEloquent();```

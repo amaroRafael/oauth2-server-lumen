@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => env('AUTH_MODEL', 'Rapiro\Models\User'),
+    'model' => env('AUTH_MODEL', 'App\Models\User'),
 
     /*
     |--------------------------------------------------------------------------

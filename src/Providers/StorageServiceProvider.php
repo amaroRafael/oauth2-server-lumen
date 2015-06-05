@@ -51,35 +51,35 @@ class StorageServiceProvider extends ServiceProvider
         $provider = $this;
 
         $this->app->bindShared('Rapiro\OAuth2Server\Storage\AccessTokenStorage', function () use ($provider) {
-            $storage = new AccessTokenStorage();
+            $storage = new AccessTokenStorage($provider->app['db']);
             return $storage;
         });
 
         $this->app->bindShared('Rapiro\OAuth2Server\Storage\AuthCodeStorage', function () use ($provider) {
-            $storage = new AuthCodeStorage();
+            $storage = new AuthCodeStorage($provider->app['db']);
             return $storage;
         });
 
         $this->app->bindShared('Rapiro\OAuth2Server\Storage\ClientStorage', function ($app) use ($provider) {
             $limitClientsToGrants = $app['config']->get('oauth2.limit_clients_to_grants');
-            $storage = new ClientStorage($limitClientsToGrants);
+            $storage = new ClientStorage($provider->app['db'], $limitClientsToGrants);
             return $storage;
         });
 
         $this->app->bindShared('Rapiro\OAuth2Server\Storage\RefreshTokenStorage', function () use ($provider) {
-            $storage = new RefreshTokenStorage();
+            $storage = new RefreshTokenStorage($provider->app['db']);
             return $storage;
         });
 
         $this->app->bindShared('Rapiro\OAuth2Server\Storage\ScopeStorage', function ($app) use ($provider) {
             $limitClientsToScopes = $app['config']->get('oauth2.limit_clients_to_scopes');
             $limitScopesToGrants = $app['config']->get('oauth2.limit_scopes_to_grants');
-            $storage = new ScopeStorage($limitClientsToScopes, $limitScopesToGrants);
+            $storage = new ScopeStorage($provider->app['db'], $limitClientsToScopes, $limitScopesToGrants);
             return $storage;
         });
 
         $this->app->bindShared('Rapiro\OAuth2Server\Storage\SessionStorage', function () use ($provider) {
-            $storage = new SessionStorage();
+            $storage = new SessionStorage($provider->app['db']);
             return $storage;
         });
     }

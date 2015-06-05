@@ -1,28 +1,26 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
 use League\OAuth2\Server\Entity\AuthCodeEntity;
 use League\OAuth2\Server\Entity\ScopeEntity;
-use League\OAuth2\Server\Storage\AbstractStorage;
 use League\OAuth2\Server\Storage\AuthCodeInterface;
 
-class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
+class AuthCodeStorage extends BaseStorage implements AuthCodeInterface
 {
     /**
      * {@inheritdoc}
      */
     public function get($code)
     {
-        $result = Capsule::table('oauth_auth_codes')
+        $result = $this->getConnection()->table('oauth_auth_codes')
                     ->where('auth_code', $code)
                     ->where('expire_time', '>=', time())
-                    ->get();
+                    ->first();
 
-        if (count($result) === 1) {
+        if (!is_null($result)) {
             $token = new AuthCodeEntity($this->server);
-            $token->setId($result[0]['auth_code']);
-            $token->setRedirectUri($result[0]['client_redirect_uri']);
-            $token->setExpireTime($result[0]['expire_time']);
+            $token->setId($result->auth_code);
+            $token->setRedirectUri($result->client_redirect_uri);
+            $token->setExpireTime($result->expire_time);
 
             return $token;
         }
@@ -32,12 +30,13 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
 
     public function create($token, $expireTime, $sessionId, $redirectUri)
     {
-        Capsule::table('oauth_auth_codes')->insert([
-            'auth_code'            =>  $token,
-            'client_redirect_uri'  =>  $redirectUri,
-            'session_id'           =>  $sessionId,
-            'expire_time'          =>  $expireTime,
-        ]);
+        $this->getConnection()->table('oauth_auth_codes')
+            ->insert([
+                'auth_code'            =>  $token,
+                'client_redirect_uri'  =>  $redirectUri,
+                'session_id'           =>  $sessionId,
+                'expire_time'          =>  $expireTime,
+            ]);
     }
 
     /**
@@ -45,7 +44,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function getScopes(AuthCodeEntity $token)
     {
-        $result = Capsule::table('oauth_auth_code_scopes')
+        $result = $this->getConnection()->table('oauth_auth_code_scopes')
                     ->select(['oauth_scopes.id', 'oauth_scopes.description'])
                     ->join('oauth_scopes', 'oauth_auth_code_scopes.scope', '=', 'oauth_scopes.id')
                     ->where('auth_code', $token->getId())
@@ -56,8 +55,8 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
         if (count($result) > 0) {
             foreach ($result as $row) {
                 $scope = (new ScopeEntity($this->server))->hydrate([
-                    'id'            =>  $row['id'],
-                    'description'   =>  $row['description'],
+                    'id'            =>  $row->id,
+                    'description'   =>  $row->description,
                 ]);
                 $response[] = $scope;
             }
@@ -71,10 +70,11 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function associateScope(AuthCodeEntity $token, ScopeEntity $scope)
     {
-        Capsule::table('oauth_auth_code_scopes')->insert([
-            'auth_code' =>  $token->getId(),
-            'scope'     =>  $scope->getId(),
-        ]);
+        $this->getConnection()->table('oauth_auth_code_scopes')
+            ->insert([
+                'auth_code' =>  $token->getId(),
+                'scope'     =>  $scope->getId(),
+            ]);
     }
 
     /**
@@ -82,7 +82,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function delete(AuthCodeEntity $token)
     {
-        Capsule::table('oauth_auth_codes')
+        $this->getConnection()->table('oauth_auth_codes')
             ->where('auth_code', $token->getId())
             ->delete();
     }

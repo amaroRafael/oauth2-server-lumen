@@ -1,12 +1,11 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\ConnectionResolverInterface as Resolver;
 use League\OAuth2\Server\Entity\ClientEntity;
 use League\OAuth2\Server\Entity\SessionEntity;
-use League\OAuth2\Server\Storage\AbstractStorage;
 use League\OAuth2\Server\Storage\ClientInterface;
 
-class ClientStorage extends AbstractStorage implements ClientInterface
+class ClientStorage extends BaseStorage implements ClientInterface
 {
     /**
      * @var bool
@@ -17,8 +16,9 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      * @param Resolver $connection
      * @param bool $limitClientsToGrants
      */
-    public function __construct($limitClientsToGrants = false)
+    public function __construct(Resolver $resolver, $limitClientsToGrants = false)
     {
+        parent::__construct($resolver);
         $this->limitClientsToGrants = $limitClientsToGrants;
     }
 
@@ -43,7 +43,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      */
     public function get($clientId, $clientSecret = null, $redirectUri = null, $grantType = null)
     {
-        $query = Capsule::table('oauth_clients')
+        $query = $this->getConnection()->table('oauth_clients')
                   ->select('oauth_clients.*')
                   ->where('oauth_clients.id', $clientId);
 
@@ -57,13 +57,13 @@ class ClientStorage extends AbstractStorage implements ClientInterface
                   ->where('oauth_client_redirect_uris.redirect_uri', $redirectUri);
         }
 
-        $result = $query->get();
+        $result = $query->first();
 
-        if (count($result) === 1) {
+        if (!is_null($result)) {
             $client = new ClientEntity($this->server);
             $client->hydrate([
-                'id'    =>  $result[0]['id'],
-                'name'  =>  $result[0]['name'],
+                'id'    =>  $result->id,
+                'name'  =>  $result->name,
             ]);
 
             return $client;
@@ -77,17 +77,17 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      */
     public function getBySession(SessionEntity $session)
     {
-        $result = Capsule::table('oauth_clients')
+        $result = $this->getConnection()->table('oauth_clients')
                     ->select(['oauth_clients.id', 'oauth_clients.name'])
                     ->join('oauth_sessions', 'oauth_clients.id', '=', 'oauth_sessions.client_id')
                     ->where('oauth_sessions.id', $session->getId())
-                    ->get();
+                    ->first();
 
-        if (count($result) === 1) {
+        if (!is_null($result)) {
             $client = new ClientEntity($this->server);
             $client->hydrate([
-                'id'    =>  $result[0]['id'],
-                'name'  =>  $result[0]['name'],
+                'id'    =>  $result->id,
+                'name'  =>  $result->name,
             ]);
 
             return $client;

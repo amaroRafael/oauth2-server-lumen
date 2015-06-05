@@ -1,18 +1,18 @@
 <?php namespace Rapiro\OAuth2Server\Storage;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\ConnectionResolverInterface as Resolver;
 use League\OAuth2\Server\Entity\ScopeEntity;
-use League\OAuth2\Server\Storage\AbstractStorage;
 use League\OAuth2\Server\Storage\ScopeInterface;
 
-class ScopeStorage extends AbstractStorage implements ScopeInterface
+class ScopeStorage extends BaseStorage implements ScopeInterface
 {
     protected $limitClientsToScopes = false;
 
     protected $limitScopesToGrants = false;
 
-    public function __construct($limitClientsToScopes = false, $limitScopesToGrants = false)
+    public function __construct(Resolver $resolver, $limitClientsToScopes = false, $limitScopesToGrants = false)
     {
+        parent::__construct($resolver);
         $this->limitClientsToScopes = $limitClientsToScopes;
         $this->limitScopesToGrants = $limitScopesToGrants;
     }
@@ -42,17 +42,17 @@ class ScopeStorage extends AbstractStorage implements ScopeInterface
      */
     public function get($scope, $grantType = null, $clientId = null)
     {
-        $result = Capsule::table('oauth_scopes')
+        $result = $this->getConnection()->table('oauth_scopes')
                     ->where('id', $scope)
-                    ->get();
+                    ->first();
 
-        if (count($result) === 0) {
+        if (is_null($result)) {
             return;
         }
 
         return (new ScopeEntity($this->server))->hydrate([
-            'id'            =>  $result[0]['id'],
-            'description'   =>  $result[0]['description'],
+            'id'            =>  $result->id,
+            'description'   =>  $result->description,
         ]);
     }
 }

@@ -49,19 +49,21 @@ class Oauth2ServerServiceProvider extends ServiceProvider {
      */
     public function registerAuthorizer()
     {
-
         $this->app->bindShared('oauth2-server.authorizer', function ($app) {
 
             $config = $app['config']->get('oauth2');
 
+            $limitClientsToGrants = $config['limit_clients_to_grants'];
+            $limitClientsToScopes = $config['limit_clients_to_scopes'];
+
             // Authorization server
             $issuer = new AuthorizationServer();
-            $issuer->setSessionStorage(new SessionStorage);
-            $issuer->setAccessTokenStorage(new AccessTokenStorage);
-            $issuer->setRefreshTokenStorage(new RefreshTokenStorage);
-            $issuer->setClientStorage(new ClientStorage);
-            $issuer->setScopeStorage(new ScopeStorage);
-            $issuer->setAuthCodeStorage(new AuthCodeStorage);
+            $issuer->setSessionStorage(new SessionStorage($app['db']));
+            $issuer->setAccessTokenStorage(new AccessTokenStorage($app['db']));
+            $issuer->setRefreshTokenStorage(new RefreshTokenStorage($app['db']));
+            $issuer->setClientStorage(new ClientStorage($app['db'], $limitClientsToGrants));
+            $issuer->setScopeStorage(new ScopeStorage($app['db'], $limitClientsToScopes, $limitClientsToGrants));
+            $issuer->setAuthCodeStorage(new AuthCodeStorage($app['db']));
             $issuer->requireScopeParam($config['scope_param']);
             $issuer->setDefaultScope($config['default_scope']);
             $issuer->requireStateParam($config['state_param']);
@@ -86,10 +88,10 @@ class Oauth2ServerServiceProvider extends ServiceProvider {
             }
 
             // Resource server
-            $sessionStorage = new SessionStorage();
-            $accessTokenStorage = new AccessTokenStorage();
-            $clientStorage = new ClientStorage();
-            $scopeStorage = new ScopeStorage();
+            $sessionStorage = new SessionStorage($app['db']);
+            $accessTokenStorage = new AccessTokenStorage($app['db']);
+            $clientStorage = new ClientStorage($app['db'], $limitClientsToGrants);
+            $scopeStorage = new ScopeStorage($app['db'], $limitClientsToScopes, $limitClientsToGrants);
 
             $checker = new ResourceServer(
                 $sessionStorage,
