@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOauthClientsTable extends Migration {
+class CreateOauthGrantsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,11 @@ class CreateOauthClientsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('oauth_clients', function(Blueprint $table)
+		Schema::create('oauth_grants', function(Blueprint $table)
 		{
             $table->string('id');
             $table->primary('id');
-            $table->string('secret');
-            $table->string('name');
-            $table->timestamps();
-
-            $table->unique(['id', 'secret']);
+			$table->timestamps();
 		});
 	}
 
@@ -31,7 +27,7 @@ class CreateOauthClientsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('oauth_clients');
+		Schema::drop('oauth_grants');
 	}
 
 }
