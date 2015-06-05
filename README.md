@@ -13,11 +13,11 @@ The package assumes you have a good-enough knowledge of the principles behind th
 
 ## Documentation
 
-This package features an [extensive wiki](https://github.com/amaroRafael/WebAPIOAuth2/wiki) to help you getting started implementing an OAuth 2.0 Server in your Laravel app.
+This package features an [extensive wiki](https://github.com/amaroRafael/oauth2server-lumen/wiki) to help you getting started implementing an OAuth 2.0 Server in your Laravel app.
 
 ## Support
 
-Bugs and feature request are tracked on [GitHub](https://github.com/amaroRafael/WebAPIOAuth2/issues)
+Bugs and feature request are tracked on [GitHub](https://github.com/amaroRafael/oauth2server-lumen/issues)
 
 ## License
 
