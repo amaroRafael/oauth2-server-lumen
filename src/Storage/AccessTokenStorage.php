@@ -12,7 +12,7 @@ class AccessTokenStorage extends BaseStorage implements AccessTokenInterface
     public function get($token)
     {
         $result = $this->getConnection()->table('oauth_access_tokens')
-                    ->where('access_tokens', $token)
+                    ->where('access_token', $token)
                     ->first();
 
         if (!is_null($result)) {
