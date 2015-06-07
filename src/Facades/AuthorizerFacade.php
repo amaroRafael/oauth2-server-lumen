@@ -6,7 +6,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class AuthorizerFacade extends Facade
+final class AuthorizerFacade extends Facade
 {
     /**
      * Get the registered name of the component

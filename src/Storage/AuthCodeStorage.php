@@ -4,7 +4,7 @@ use League\OAuth2\Server\Entity\AuthCodeEntity;
 use League\OAuth2\Server\Entity\ScopeEntity;
 use League\OAuth2\Server\Storage\AuthCodeInterface;
 
-class AuthCodeStorage extends BaseStorage implements AuthCodeInterface
+final class AuthCodeStorage extends BaseStorage implements AuthCodeInterface
 {
     /**
      * {@inheritdoc}

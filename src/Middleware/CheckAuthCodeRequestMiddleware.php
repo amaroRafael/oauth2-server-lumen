@@ -3,7 +3,7 @@
 use Closure;
 use Rapiro\OAuth2Server\Filters\CheckAuthCodeRequestFilter;
 
-class CheckAuthCodeRequestMiddleware extends CheckAuthCodeRequestFilter {
+final class CheckAuthCodeRequestMiddleware extends CheckAuthCodeRequestFilter {
 
     public function handle($request, Closure $next)
     {

@@ -5,7 +5,7 @@ use League\OAuth2\Server\Entity\ClientEntity;
 use League\OAuth2\Server\Entity\SessionEntity;
 use League\OAuth2\Server\Storage\ClientInterface;
 
-class ClientStorage extends BaseStorage implements ClientInterface
+final class ClientStorage extends BaseStorage implements ClientInterface
 {
     /**
      * @var bool

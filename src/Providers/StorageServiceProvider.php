@@ -12,7 +12,7 @@ use Rapiro\OAuth2Server\Storage\ScopeStorage;
 use Rapiro\OAuth2Server\Storage\SessionStorage;
 use Illuminate\Support\ServiceProvider;
 
-class StorageServiceProvider extends ServiceProvider
+final class StorageServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.

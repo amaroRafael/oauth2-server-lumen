@@ -19,7 +19,7 @@ use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use League\OAuth2\Server\ResourceServer;
 
-class Oauth2ServerServiceProvider extends ServiceProvider {
+final class Oauth2ServerServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.

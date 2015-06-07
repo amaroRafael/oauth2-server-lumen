@@ -8,7 +8,7 @@ use League\OAuth2\Server\Exception\OAuthException;
 /*
 * OAuthExceptionHandlerMiddleware
 */
-class OAuthExceptionHandlerMiddleware implements Middleware
+final class OAuthExceptionHandlerMiddleware implements Middleware
 {
     public function handle($request, Closure $next)
     {

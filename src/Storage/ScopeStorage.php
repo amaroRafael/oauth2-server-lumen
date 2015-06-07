@@ -4,7 +4,7 @@ use Illuminate\Database\ConnectionResolverInterface as Resolver;
 use League\OAuth2\Server\Entity\ScopeEntity;
 use League\OAuth2\Server\Storage\ScopeInterface;
 
-class ScopeStorage extends BaseStorage implements ScopeInterface
+final class ScopeStorage extends BaseStorage implements ScopeInterface
 {
     protected $limitClientsToScopes = false;
 

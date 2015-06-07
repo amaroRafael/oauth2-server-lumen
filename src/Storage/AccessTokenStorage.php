@@ -4,7 +4,7 @@ use League\OAuth2\Server\Entity\AccessTokenEntity;
 use League\OAuth2\Server\Entity\ScopeEntity;
 use League\OAuth2\Server\Storage\AccessTokenInterface;
 
-class AccessTokenStorage extends BaseStorage implements AccessTokenInterface
+final class AccessTokenStorage extends BaseStorage implements AccessTokenInterface
 {
     /**
      * {@inheritdoc}

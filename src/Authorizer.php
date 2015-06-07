@@ -11,7 +11,7 @@ use League\OAuth2\Server\TokenType\TokenTypeInterface;
 use League\OAuth2\Server\Util\RedirectUri;
 use Symfony\Component\HttpFoundation\Request;
 
-class Authorizer
+final class Authorizer
 {
     /**
      * The authorization server (aka the issuer)
