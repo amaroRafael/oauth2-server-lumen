@@ -3,7 +3,7 @@
 use League\OAuth2\Server\Entity\RefreshTokenEntity;
 use League\OAuth2\Server\Storage\RefreshTokenInterface;
 
-class RefreshTokenStorage extends BaseStorage implements RefreshTokenInterface
+final class RefreshTokenStorage extends BaseStorage implements RefreshTokenInterface
 {
     /**
      * {@inheritdoc}

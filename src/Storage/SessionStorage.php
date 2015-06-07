@@ -6,7 +6,7 @@ use League\OAuth2\Server\Entity\ScopeEntity;
 use League\OAuth2\Server\Entity\SessionEntity;
 use League\OAuth2\Server\Storage\SessionInterface;
 
-class SessionStorage extends BaseStorage implements SessionInterface
+final class SessionStorage extends BaseStorage implements SessionInterface
 {
     /**
      * {@inheritdoc}

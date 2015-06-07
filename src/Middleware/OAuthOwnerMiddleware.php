@@ -3,7 +3,7 @@
 use Closure;
 use Rapiro\OAuth2Server\Filters\OAuthOwnerFilter;
 
-class OAuthOwnerMiddleware extends OAuthOwnerFilter {
+final class OAuthOwnerMiddleware extends OAuthOwnerFilter {
 
     public function handle($request, Closure $next)
     {
